@@ -1,0 +1,81 @@
+/* Global styles shared by all components */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --brand: #f59e0b;
+  --brand-dark: #b45309;
+  --bg: #f3f4f6;
+  --danger: #dc2626;
+}
+
+html, body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100%;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- buttons ---------- */
+.btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 26px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.btn.primary { background: var(--brand); color: #111827; }
+.btn.primary:hover { background: #fbbf24; }
+.btn.ghost { background: #fff; border-color: #d1d5db; color: var(--ink); }
+.btn.ghost:hover { background: #f3f4f6; }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+
+/* ---------- form fields (used inside FormField slots) ---------- */
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field > span { font-size: 13px; color: var(--muted); font-weight: 600; }
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  background: #fff;
+  resize: vertical;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+.field input.readonly { background: #f9fafb; font-weight: 700; }
+.field input.due { color: var(--danger); }
+.field.has-error input,
+.field.has-error textarea { border-color: var(--danger); }
+.err { color: var(--danger); font-size: 12px; }
+
+/* checkbox row (Tax option) */
+.check {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+.check input { width: 20px; height: 20px; accent-color: var(--brand); cursor: pointer; }
+
+/* ---------- print: 80mm thermal paper ---------- */
+@page { size: 80mm auto; margin: 0; }
+@media print {
+  html, body { background: #fff; width: 80mm; }
+}
