@@ -19,13 +19,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: Build Vue application
         run: npm run build
+
+      - name: Verify dist folder
+        run: |
+          if (!(Test-Path "dist/index.html")) {
+            throw "dist/index.html not found!"
+          }
+          Write-Host "Vue production build verified."
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -42,8 +48,15 @@ jobs:
           --add-data "dist;dist"
           --distpath release
           --workpath build-temp
-          --specpath build-temp
+          --specpath .
           launcher/server.py
+
+      - name: Verify EXE
+        run: |
+          if (!(Test-Path "release/RS-Cargo.exe")) {
+            throw "RS-Cargo.exe was not generated!"
+          }
+          Write-Host "RS Cargo EXE generated successfully."
 
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
@@ -52,3 +65,4 @@ jobs:
           path: release/RS-Cargo.exe
           if-no-files-found: error
           retention-days: 30
+
