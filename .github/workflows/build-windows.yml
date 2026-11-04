@@ -1,0 +1,54 @@
+
+name: Build RS Cargo for Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build Vue application
+        run: npm run build
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install PyInstaller
+        run: python -m pip install pyinstaller
+
+      - name: Build Windows EXE
+        run: >
+          pyinstaller --onefile
+          --name RS-Cargo
+          --add-data "dist;dist"
+          --distpath release
+          --workpath build-temp
+          --specpath build-temp
+          launcher/server.py
+
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: RS-Cargo-Windows
+          path: release/RS-Cargo.exe
+          if-no-files-found: error
+          retention-days: 30
