@@ -1,9 +1,10 @@
 <script setup>
+import brandlogo from '../assets/brand-logo.svg'
 </script>
 
 <template>
   <aside class="brand">
-    <img src="../../public/brand-logo.svg" alt="RS CARGO logo" class="brand-logo" />
+    <img :src="brandlogo" alt="RS CARGO logo" class="brand-logo" />
     <h1>RS CARGO</h1>
     <p class="tagline">Fast &bull; Safe &bull; Reliable</p>
   </aside>

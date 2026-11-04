@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { money } from '../utils/format'
+import logo from '../assets/logo.png'
 
 defineProps({
   receipt: { type: Object, required: true },
@@ -15,7 +16,7 @@ defineExpose({ el })
 <template>
   <div class="receipt" ref="el">
     <div class="r-head">
-      <img src="../../public/logo.png" alt="Rana Sanaullah Cargo" class="r-logo" />
+      <img :src="logo" alt="Rana Sanaullah Cargo" class="r-logo" />
       <div class="r-contact">Contact: 0305-9911139</div>
     </div>
 

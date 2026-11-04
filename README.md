@@ -23,6 +23,14 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ```sh
 npm install
+
+npm install package_name \
+  --registry=https://registry.npmjs.org/ \
+  --no-audit \
+  --no-fund \
+  --fetch-timeout=60000 \
+  --fetch-retries=1
+
 ```
 
 ### Compile and Hot-Reload for Development
