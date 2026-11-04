@@ -1,7 +1,7 @@
 <script setup>
 import FormCard from './FormCard.vue'
 import FormField from './FormField.vue'
-import { TAX_PERCENT } from '../utils/constants'
+import { TAX_PERCENT } from '../utils/constants.js'
 
 defineProps({
   charges: { type: Object, required: true }, // uses charges.addTax

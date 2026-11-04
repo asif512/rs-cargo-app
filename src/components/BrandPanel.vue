@@ -3,7 +3,7 @@
 
 <template>
   <aside class="brand">
-    <img src="../../public/logo01.svg" alt="RS CARGO logo" class="brand-logo" />
+    <img src="../../public/brand-logo.svg" alt="RS CARGO logo" class="brand-logo" />
     <h1>RS CARGO</h1>
     <p class="tagline">Fast &bull; Safe &bull; Reliable</p>
   </aside>
