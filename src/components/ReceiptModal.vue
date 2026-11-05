@@ -19,7 +19,7 @@ async function downloadReceipt() {
   if (busy.value || !receiptRef.value?.el) return
   busy.value = true
   try {
-    await downloadElementAsImage(receiptRef.value.el, `${props.receipt.receiptNo}.pdf`)
+    await downloadElementAsImage(receiptRef.value.el, `${props.receipt.receiptNo}`)
   } catch (err) {
     console.error(err)
     alert('Download failed. Please try again.')
