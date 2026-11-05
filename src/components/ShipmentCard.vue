@@ -12,11 +12,11 @@ const err = (key) => props.errors[`shipment.${key}`]
 
 <template>
   <FormCard title="Route & Goods">
-    <FormField label="From" :error="err('from')">
+    <FormField label="Booking Point" :error="err('from')">
       <input v-model="shipment.from" type="text" placeholder="City / area" />
     </FormField>
 
-    <FormField label="To" :error="err('to')">
+    <FormField label="Delivery Point" :error="err('to')">
       <input v-model="shipment.to" type="text" placeholder="City / area" />
     </FormField>
 

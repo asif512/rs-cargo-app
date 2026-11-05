@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import ThermalReceipt from './ThermalReceipt.vue'
-import { downloadElementAsPdf } from '../utils/pdf'
+import { downloadElementAsImage } from '../utils/pdf'
 
 const props = defineProps({
   receipt: { type: Object, required: true },
@@ -19,7 +19,7 @@ async function downloadReceipt() {
   if (busy.value || !receiptRef.value?.el) return
   busy.value = true
   try {
-    await downloadElementAsPdf(receiptRef.value.el, `${props.receipt.receiptNo}.pdf`)
+    await downloadElementAsImage(receiptRef.value.el, `${props.receipt.receiptNo}.pdf`)
   } catch (err) {
     console.error(err)
     alert('Download failed. Please try again.')

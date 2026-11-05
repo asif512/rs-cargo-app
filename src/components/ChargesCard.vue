@@ -29,5 +29,12 @@ const err = (key) => props.errors[`charges.${key}`]
     <FormField label="Due (Rs.)">
       <input :value="due" type="text" readonly class="readonly due" />
     </FormField>
+
+    <div class="rate-checkbox">
+      <label class="check">
+        <input v-model="charges.isVisiblePerKGCharges" type="checkbox" />
+        <span>Show Per KG Charges</span>
+      </label>
+    </div>
   </FormCard>
 </template>

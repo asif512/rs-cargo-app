@@ -6,7 +6,7 @@ const emptyForm = () => ({
   sender: { name: '', mobile: '', cnic: '' },
   receiver: { name: '', mobile: '', cnic: '' },
   shipment: { from: '', to: '', goods: '', quantity: '', weight: '' },
-  charges: { rate: '', payment: '', addTax: false },
+  charges: { rate: '', payment: '', addTax: false, isVisiblePerKGCharges: false },
 })
 
 export function useReceiptForm() {
@@ -16,8 +16,8 @@ export function useReceiptForm() {
 
   const total = computed(() => Math.round(num(form.shipment.weight) * num(form.charges.rate)))
   const tax = computed(() => (form.charges.addTax ? Math.round(total.value * TAX_RATE) : 0))
-  const netTotal = computed(() => total.value - tax.value) // shown on the slip only
-  const due = computed(() => Math.max(total.value - num(form.charges.payment), 0)) // tax does not change Due
+  const netTotal = computed(() => total.value + tax.value) // shown on the slip only
+  const due = computed(() => Math.max((total.value + tax.value) - num(form.charges.payment), 0)) // tax does not change Due
 
   function validate() {
     submitted.value = true
@@ -41,7 +41,7 @@ export function useReceiptForm() {
     if (!(num(form.shipment.weight) > 0)) e['shipment.weight'] = 'Enter weight in kg'
     if (!(num(form.charges.rate) > 0)) e['charges.rate'] = 'Enter rate per kg'
     if (num(form.charges.payment) < 0) e['charges.payment'] = 'Invalid amount'
-    else if (num(form.charges.payment) > total.value) e['charges.payment'] = 'Payment is more than total'
+    else if (num(form.charges.payment) > (total.value + tax.value)) e['charges.payment'] = 'Payment is more than total'
 
     Object.keys(errors).forEach((k) => delete errors[k])
     Object.assign(errors, e)

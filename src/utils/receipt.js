@@ -26,6 +26,7 @@ export function buildReceipt(form, { total, tax, netTotal, due }) {
     rate: num(form.charges.rate),
     total,
     taxEnabled: !!form.charges.addTax,
+    perKgEnagles: !!form.charges.isVisiblePerKGCharges,
     taxPercent: TAX_PERCENT,
     tax,
     netTotal,
