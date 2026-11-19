@@ -3,7 +3,7 @@ import FormCard from './FormCard.vue'
 import FormField from './FormField.vue'
 
 const props = defineProps({
-  charges: { type: Object, required: true }, // { rate, payment }
+  charges: { type: Object, required: true }, // { rate, total, payment, addTax, isVisiblePerKGCharges }
   total: { type: Number, required: true },
   due: { type: Number, required: true },
   errors: { type: Object, default: () => ({}) },
@@ -18,8 +18,15 @@ const err = (key) => props.errors[`charges.${key}`]
       <input v-model="charges.rate" type="number" min="0" step="any" placeholder="0" />
     </FormField>
 
-    <FormField label="Total Charges (Rs.)">
-      <input :value="total" type="text" readonly class="readonly" />
+    <FormField label="Total Charges (Rs.)" :error="err('total')">
+      <input
+        :value="charges.total !== '' ? charges.total : (total || '')"
+        @input="charges.total = $event.target.value"
+        type="number"
+        min="0"
+        step="any"
+        placeholder="0"
+      />
     </FormField>
 
     <FormField label="Payment (Rs.)" :error="err('payment')">
