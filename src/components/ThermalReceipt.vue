@@ -46,7 +46,7 @@ defineExpose({ el })
 
     <div class="r-line"></div>
     <div class="r-title">CHARGES</div>
-    <div v-if="receipt.perKgEnagles" class="r-row"><b class="r-row-label">Rate / KG</b><b>{{ money(receipt.rate) }}</b></div>
+    <div v-if="receipt.perKgEnagles" class="r-row"><b class="r-row-label">Rate / KG</b><b>{{ receipt.rate == 0 ? '-' : money(receipt.rate) }}</b></div>
     <div class="r-row"><b class="r-row-label">Total</b><b>{{ money(receipt.total) }}</b></div>
     <div v-if="receipt.taxEnabled" class="r-row"><b class="r-row-label">Tax ({{ receipt.taxPercent }}%)</b><b>{{ money(receipt.tax) }}</b></div>
     <div v-if="receipt.taxEnabled" class="r-row"><b class="r-row-label">Net Total</b><b>{{ money(receipt.netTotal) }}</b></div>

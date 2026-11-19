@@ -33,7 +33,7 @@ async function generateReceipt() {
 
     <main class="form-side">
       <div class="form-scroll">
-        <h2 class="page-title">New Cargo Receipt</h2>
+        <h2 class="page-title">RSC CARGO</h2>
 
         <PartyCard title="Sender" prefix="sender" :party="form.sender" :errors="errors" />
         <PartyCard title="Receiver" prefix="receiver" :party="form.receiver" :errors="errors" />

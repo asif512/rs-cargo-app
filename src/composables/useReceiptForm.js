@@ -6,7 +6,8 @@ const emptyForm = () => ({
   sender: { name: '', mobile: '', cnic: '' },
   receiver: { name: '', mobile: '', cnic: '' },
   shipment: { from: '', to: '', goods: '', quantity: '', weight: '' },
-  charges: { rate: '', payment: '', addTax: false, isVisiblePerKGCharges: false },
+  // charges.total: '' = automatic (kg x rate), otherwise the amount typed by the user
+  charges: { rate: '', total: '', payment: '', addTax: false, isVisiblePerKGCharges: false },
 })
 
 export function useReceiptForm() {
@@ -14,10 +15,14 @@ export function useReceiptForm() {
   const errors = reactive({}) // keys like 'sender.name', 'charges.rate'
   const submitted = ref(false)
 
-  const total = computed(() => Math.round(num(form.shipment.weight) * num(form.charges.rate)))
+  const autoTotal = computed(() => Math.round(num(form.shipment.weight) * num(form.charges.rate)))
+  // user can type their own Total Charges; empty field = automatic. Weight and rate are never changed by this.
+  const total = computed(() =>
+    String(form.charges.total).trim() !== '' ? Math.round(num(form.charges.total)) : autoTotal.value
+  )
   const tax = computed(() => (form.charges.addTax ? Math.round(total.value * TAX_RATE) : 0))
   const netTotal = computed(() => total.value + tax.value) // shown on the slip only
-  const due = computed(() => Math.max((total.value + tax.value) - num(form.charges.payment), 0)) // tax does not change Due
+  const due = computed(() => Math.max((total.value + tax.value) - num(form.charges.payment), 0))
 
   function validate() {
     submitted.value = true
@@ -39,7 +44,8 @@ export function useReceiptForm() {
     }
 
     if (!(num(form.shipment.weight) > 0)) e['shipment.weight'] = 'Enter weight in kg'
-    if (!(num(form.charges.rate) > 0)) e['charges.rate'] = 'Enter rate per kg'
+    // if (!(num(form.charges.rate) > 0)) e['charges.rate'] = 'Enter rate per kg'
+    if (!(total.value > 0)) e['charges.total'] = 'Total must be more than 0'
     if (num(form.charges.payment) < 0) e['charges.payment'] = 'Invalid amount'
     else if (num(form.charges.payment) > (total.value + tax.value)) e['charges.payment'] = 'Payment is more than total'
 
@@ -47,6 +53,11 @@ export function useReceiptForm() {
     Object.assign(errors, e)
     return Object.keys(e).length === 0
   }
+
+  // changing kg or rate recalculates the total automatically (clears a manually typed total)
+  watch(() => [form.shipment.weight, form.charges.rate], () => {
+    form.charges.total = ''
+  })
 
   // after the first submit attempt, keep errors in sync while typing
   watch(form, () => {
@@ -59,5 +70,5 @@ export function useReceiptForm() {
     submitted.value = false
   }
 
-  return { form, errors, total, tax, netTotal, due, validate, reset }
+  return { form, errors, total, autoTotal, tax, netTotal, due, validate, reset }
 }

@@ -5,7 +5,7 @@ import brandlogo from '../assets/brand-logo.svg'
 <template>
   <aside class="brand">
     <img :src="brandlogo" alt="RS CARGO logo" class="brand-logo" />
-    <h1>RS CARGO</h1>
+    <h1>RSC CARGO</h1>
     <p class="tagline">Fast &bull; Safe &bull; Reliable</p>
   </aside>
 </template>
