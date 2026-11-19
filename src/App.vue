@@ -78,7 +78,9 @@ async function generateReceipt() {
   .form-actions { position: sticky; bottom: 0; padding: 12px 16px; }
   .form-actions .btn.primary { flex: 1; min-width: 0; }
 }
-
+@media (max-width: 786px) {
+  .page-title { display: none; }
+}
 @media print {
   .app-shell { display: none; }
 }

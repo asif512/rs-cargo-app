@@ -33,4 +33,11 @@ h1 { font-size: 34px; letter-spacing: 4px; font-weight: 800; color: var(--brand)
   .brand-logo { width: 96px; height: auto; }
   h1 { font-size: 24px; }
 }
+
+@media (max-width: 786px) {
+  .brand {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>
